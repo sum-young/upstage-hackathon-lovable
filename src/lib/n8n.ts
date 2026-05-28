@@ -8,7 +8,7 @@ export interface N8nPayload {
 }
 
 export async function callN8n(payload: N8nPayload) {
-  const url = "http://https://chubby-maps-see.loca.lt/localhost:5678/webhook-test/8c751a92-69cb-48d1-b747-5ea897123823";
+  const url = "http://localhost:5678/webhook-test/8c751a92-69cb-48d1-b747-5ea897123823";
 
   if (!url || url.includes("여기에")) {
     throw new Error("n8n 웹훅 URL이 입력되지 않았습니다. 코드를 확인해주세요.");
