@@ -47,6 +47,8 @@ function Index() {
   const [file, setFile] = useState<File | null>(null);
   const [dragOver, setDragOver] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [stage, setStage] = useState<"input" | "result">("input");
+  const [result, setResult] = useState<{ copy: string; design: string } | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
