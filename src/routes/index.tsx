@@ -8,6 +8,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
 
 export const Route = createFileRoute("/")({
@@ -20,7 +21,9 @@ export const Route = createFileRoute("/")({
   component: Index,
 });
 
+const PRODUCT_CATEGORIES = ["세럼", "토너", "크림", "기타"];
 const AGES = ["10대 후반", "20대", "30대", "40대"];
+const SKIN_TYPES = ["건성", "지성", "민감성"];
 const TEMPLATES = ["올리브영", "아마존"];
 const ACCEPTED = [
   "application/pdf",
@@ -34,9 +37,12 @@ function isValidFile(f: File) {
 }
 
 function Index() {
-  const [productType, setProductType] = useState<string>("");
-  const [age, setAge] = useState<string>("20대");
-  const [template, setTemplate] = useState<string>("올리브영");
+  const [productCategory, setProductCategory] = useState<string>("");
+  const [productCategoryOther, setProductCategoryOther] = useState<string>("");
+  const [ageGroup, setAgeGroup] = useState<string>("30대");
+  const [skinType, setSkinType] = useState<string>("건성");
+  const [designType, setDesignType] = useState<string>("올리브영");
+  const [highlight, setHighlight] = useState<string>("");
   const [file, setFile] = useState<File | null>(null);
   const [dragOver, setDragOver] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -49,6 +55,32 @@ function Index() {
       return;
     }
     setFile(f);
+  };
+
+  const handleSubmit = () => {
+    const resolvedCategory =
+      productCategory === "기타" ? productCategoryOther.trim() : productCategory;
+
+    if (!resolvedCategory) {
+      toast.error("제품 유형을 선택해주세요.");
+      return;
+    }
+    if (!file) {
+      toast.error("전성분 PDF 또는 Excel 파일을 업로드해주세요.");
+      return;
+    }
+
+    const payload = {
+      product_category: resolvedCategory,
+      skin_type: skinType,
+      age_group: ageGroup,
+      design_type: designType,
+      highlight: highlight.trim() || undefined,
+    };
+
+    // TODO: n8n webhook 연동 (file은 multipart 로 함께 전송)
+    console.log("submit payload", payload, "file:", file);
+    toast.success("콘텐츠 생성 요청을 보냈습니다.");
   };
 
   return (
@@ -69,16 +101,26 @@ function Index() {
           {/* 1. 제품 유형 선택 */}
           <section>
             <h2 className="text-sm font-semibold mb-3">1. 제품 유형 선택</h2>
-            <Select value={productType} onValueChange={setProductType}>
+            <Select value={productCategory} onValueChange={setProductCategory}>
               <SelectTrigger className="w-full border-2 border-primary bg-secondary/60 px-4 py-6 text-sm font-medium rounded-xl">
                 <SelectValue placeholder="제품유형 선택" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="세럼">세럼</SelectItem>
-                <SelectItem value="토너">토너</SelectItem>
-                <SelectItem value="크림">크림</SelectItem>
+                {PRODUCT_CATEGORIES.map((c) => (
+                  <SelectItem key={c} value={c}>
+                    {c}
+                  </SelectItem>
+                ))}
               </SelectContent>
             </Select>
+            {productCategory === "기타" && (
+              <Input
+                value={productCategoryOther}
+                onChange={(e) => setProductCategoryOther(e.target.value)}
+                placeholder="제품 유형을 직접 입력해주세요"
+                className="mt-3 rounded-xl border-border bg-muted px-4 py-3 text-sm h-auto focus-visible:border-primary focus-visible:bg-card"
+              />
+            )}
           </section>
 
           {/* 2. 타깃 연령층 */}
@@ -86,13 +128,13 @@ function Index() {
             <h2 className="text-sm font-semibold mb-3">2. 타깃 연령층 설정</h2>
             <div role="radiogroup" className="grid grid-cols-4 gap-3">
               {AGES.map((a) => {
-                const active = age === a;
+                const active = ageGroup === a;
                 return (
                   <button
                     key={a}
                     role="radio"
                     aria-checked={active}
-                    onClick={() => setAge(a)}
+                    onClick={() => setAgeGroup(a)}
                     className={`relative aspect-square rounded-xl border flex flex-col items-center justify-end p-3 text-xs font-medium transition ${
                       active
                         ? "border-primary bg-primary/15 text-foreground"
@@ -113,18 +155,50 @@ function Index() {
             </div>
           </section>
 
-          {/* 3. 템플릿 설정 */}
+          {/* 3. 피부 타입 */}
           <section>
-            <h2 className="text-sm font-semibold mb-3">3. 템플릿 설정</h2>
+            <h2 className="text-sm font-semibold mb-3">3. 피부 타입</h2>
+            <div role="radiogroup" className="grid grid-cols-3 gap-3">
+              {SKIN_TYPES.map((s) => {
+                const active = skinType === s;
+                return (
+                  <button
+                    key={s}
+                    role="radio"
+                    aria-checked={active}
+                    onClick={() => setSkinType(s)}
+                    className={`relative aspect-square rounded-xl border flex flex-col items-center justify-end p-3 text-xs font-medium transition ${
+                      active
+                        ? "border-primary bg-primary/15 text-foreground"
+                        : "border-border bg-muted hover:bg-secondary"
+                    }`}
+                  >
+                    <span
+                      className={`absolute top-2 right-2 h-6 w-6 rounded-full flex items-center justify-center transition ${
+                        active ? "bg-primary text-primary-foreground" : "bg-card border border-border"
+                      }`}
+                    >
+                      {active && <Check className="h-4 w-4" strokeWidth={3} />}
+                    </span>
+                    {s}
+                  </button>
+                );
+              })}
+            </div>
+          </section>
+
+          {/* 4. 템플릿 설정 */}
+          <section>
+            <h2 className="text-sm font-semibold mb-3">4. 템플릿 설정</h2>
             <div role="radiogroup" className="grid grid-cols-2 gap-3">
               {TEMPLATES.map((t) => {
-                const active = template === t;
+                const active = designType === t;
                 return (
                   <button
                     key={t}
                     role="radio"
                     aria-checked={active}
-                    onClick={() => setTemplate(t)}
+                    onClick={() => setDesignType(t)}
                     className={`relative h-32 rounded-xl border flex flex-col items-center justify-end p-3 text-sm font-medium transition ${
                       active
                         ? "border-primary bg-primary/15"
@@ -145,9 +219,9 @@ function Index() {
             </div>
           </section>
 
-          {/* 4. 업로드 */}
+          {/* 5. 업로드 */}
           <section className="md:row-span-2">
-            <h2 className="text-sm font-semibold mb-3">4. 전성분 PDF/EXCEL 업로드</h2>
+            <h2 className="text-sm font-semibold mb-3">5. 전성분 PDF/EXCEL 업로드</h2>
             <div
               onClick={() => inputRef.current?.click()}
               onDragOver={(e) => {
@@ -203,11 +277,13 @@ function Index() {
             </div>
           </section>
 
-          {/* 5. 강조 요소 */}
+          {/* 6. 강조 요소 */}
           <section>
-            <h2 className="text-sm font-semibold mb-3">5. 강조 요소 입력</h2>
+            <h2 className="text-sm font-semibold mb-3">6. 강조 요소 입력</h2>
             <input
               type="text"
+              value={highlight}
+              onChange={(e) => setHighlight(e.target.value)}
               placeholder="예: 저자극, 비건, 무향"
               className="w-full rounded-xl border border-border bg-muted px-4 py-3 text-sm focus:outline-none focus:border-primary focus:bg-card transition"
             />
@@ -215,7 +291,10 @@ function Index() {
         </div>
 
         <div className="flex justify-end mt-10">
-          <button className="rounded-xl bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground hover:bg-primary/90 transition shadow-sm">
+          <button
+            onClick={handleSubmit}
+            className="rounded-xl bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground hover:bg-primary/90 transition shadow-sm"
+          >
             콘텐츠 생성하기
           </button>
         </div>
