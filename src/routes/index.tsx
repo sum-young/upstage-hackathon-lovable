@@ -23,9 +23,23 @@ export const Route = createFileRoute("/")({
 });
 
 const PRODUCT_CATEGORIES = ["세럼", "토너", "크림", "기타"];
-const AGES = ["10대 후반", "20대", "30대", "40대"];
-const SKIN_TYPES = ["건성", "지성", "민감성"];
-const TEMPLATES = ["올리브영", "아마존"];
+const AGES: { label: string; icon: React.ReactNode }[] = [
+  { label: "10대", icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="w-8 h-8"><circle cx="12" cy="8" r="3.5"/><path d="M8 20c0-2.2 1.8-4 4-4s4 1.8 4 4"/></svg> },
+  { label: "20대", icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="w-8 h-8"><circle cx="12" cy="7.5" r="3"/><path d="M7 21c0-2.8 2.2-5 5-5s5 2.2 5 5"/></svg> },
+  { label: "30대", icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="w-8 h-8"><circle cx="12" cy="7.5" r="3"/><path d="M6 21c0-3.3 2.7-6 6-6s6 2.7 6 6"/></svg> },
+  { label: "40대", icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="w-8 h-8"><circle cx="12" cy="7" r="2.8"/><path d="M6 21c0-3.3 2.7-6 6-6s6 2.7 6 6"/><path d="M10 11h4" strokeDasharray="1.5 1.5"/></svg> },
+];
+
+const SKIN_TYPES: { label: string; icon: React.ReactNode }[] = [
+  { label: "건성", icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" className="w-8 h-8"><circle cx="12" cy="12" r="9"/><path d="M8 10c1.5 2 2.5 2 4 0"/><path d="M10 14c1 1.5 3 1.5 4 0"/><path d="M7 8l1 1M17 8l-1 1M6 17l2-1M18 17l-2-1" strokeWidth="1.2"/></svg> },
+  { label: "지성", icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" className="w-8 h-8"><circle cx="12" cy="12" r="9"/><path d="M9 10c1.2 1.5 2.8 1.5 4 0"/><path d="M10 14c1 .8 3 .8 4 0"/><path d="M14.5 6.5c0 1.5-1 2-1 3.5"/><circle cx="15.5" cy="6.5" r=".8" fill="currentColor" stroke="none"/></svg> },
+  { label: "민감성", icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" className="w-8 h-8"><circle cx="12" cy="12" r="9"/><path d="M8 10c1.5 2 2.5 2 4 0"/><path d="M10 14c1 1.5 3 1.5 4 0"/><path d="M6 13c2-1 4-1 6 0s4 1 6 0" opacity=".35"/><circle cx="9" cy="16" r="1.2" fill="currentColor" opacity=".25" stroke="none"/><circle cx="15" cy="16" r="1.2" fill="currentColor" opacity=".25" stroke="none"/></svg> },
+];
+
+const TEMPLATES: { label: string; icon: React.ReactNode }[] = [
+  { label: "올리브영", icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" className="w-10 h-10"><rect x="6" y="2" width="12" height="20" rx="2"/><path d="M10 18h4"/></svg> },
+  { label: "아마존", icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" className="w-10 h-10"><rect x="2" y="4" width="20" height="14" rx="2"/><path d="M8 18h8"/><path d="M12 21v-3"/></svg> },
+];
 const ACCEPTED = [
   "application/pdf",
   "application/vnd.ms-excel",
