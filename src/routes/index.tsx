@@ -99,14 +99,75 @@ function Index() {
 
     setIsSubmitting(true);
     try {
-      await callN8n(payload);
-      toast.success("콘텐츠 생성 요청을 보냈습니다.");
+      // TODO: 실제 백엔드 연결 시 callN8n(payload) 응답 사용
+      // const data = await callN8n(payload);
+      void callN8n;
+      await new Promise((r) => setTimeout(r, 600));
+      const fake = {
+        copy: `[${resolvedCategory}] ${ageGroup} ${skinType} 피부를 위한 데일리 솔루션\n\n매일 사용해도 부담 없는 저자극 포뮬러로, ${skinType} 피부에 꼭 필요한 수분과 진정 케어를 한 번에.\n\n· 핵심 성분: 나이아신아마이드, 히알루론산, 병풀추출물\n· 산뜻하게 스며드는 가벼운 텍스처\n· 비건 인증 / 동물 실험 없음${highlight ? `\n· 강조 포인트: ${highlight}` : ""}\n\n지금, 가장 깨끗한 선택을 시작하세요.`,
+        design: `${designType} 템플릿 기반 상세페이지 레이아웃 가이드\n\n1) 히어로 섹션\n  - 연녹색(#E8F1E4) 배경 + 제품 컷아웃 이미지\n  - 큰 세리프 헤드라인 1줄 + 서브 카피 1줄\n\n2) 핵심 베네핏 3분할\n  - 아이콘 + 헤드라인 + 1줄 설명\n  - 여백 넉넉히, 라인 디바이더 사용\n\n3) 전성분 하이라이트\n  - 주요 성분 4~6종 카드 그리드\n  - 각 성분 효능을 한 줄로 요약\n\n4) 사용법 / 텍스처 이미지\n  - 핸드 스와치, 사용 단계 3컷\n\n5) 인증/안전성 배지\n  - 비건, EWG, 임상 결과 등 신뢰 요소 배치`,
+      };
+      setResult(fake);
+      setStage("result");
     } catch (err: any) {
       toast.error(err?.message || "요청 중 오류가 발생했습니다.");
     } finally {
       setIsSubmitting(false);
     }
   };
+
+  const copyText = async (text: string, label: string) => {
+    try {
+      await navigator.clipboard.writeText(text);
+      toast.success(`${label}을(를) 복사했습니다.`);
+    } catch {
+      toast.error("복사에 실패했습니다.");
+    }
+  };
+
+  if (stage === "result" && result) {
+    return (
+      <div className="min-h-screen bg-background p-6 md:p-10">
+        <div className="mx-auto max-w-5xl rounded-3xl border border-border bg-card p-6 md:p-10 shadow-sm">
+          <header className="flex items-center justify-between pb-6 border-b border-border">
+            <div className="flex items-center gap-3">
+              <button
+                onClick={() => setStage("input")}
+                className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground transition"
+              >
+                <ArrowLeft className="h-4 w-4" />
+                돌아가기
+              </button>
+            </div>
+            <h1 className="text-lg font-semibold">생성 결과</h1>
+            <div className="w-20" />
+          </header>
+
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-8">
+            <ResultPanel
+              title="상세페이지 카피"
+              value={result.copy}
+              onCopy={() => copyText(result.copy, "상세페이지 카피")}
+            />
+            <ResultPanel
+              title="디자인 제안 및 가이드라인"
+              value={result.design}
+              onCopy={() => copyText(result.design, "디자인 가이드")}
+            />
+          </div>
+
+          <div className="flex justify-end mt-8">
+            <button
+              onClick={() => setStage("input")}
+              className="rounded-xl bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground hover:bg-primary/90 transition shadow-sm"
+            >
+              다시 생성하기
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-background p-6 md:p-10">
