@@ -259,14 +259,14 @@ function Index() {
             <h2 className="text-sm font-semibold mb-3">2. 타깃 연령층 설정</h2>
             <div role="radiogroup" className="grid grid-cols-4 gap-3">
               {AGES.map((a) => {
-                const active = ageGroup === a;
+                const active = ageGroup === a.label;
                 return (
                   <button
-                    key={a}
+                    key={a.label}
                     role="radio"
                     aria-checked={active}
-                    onClick={() => setAgeGroup(a)}
-                    className={`relative aspect-square rounded-xl border flex flex-col items-center justify-end p-3 text-xs font-medium transition ${
+                    onClick={() => setAgeGroup(a.label)}
+                    className={`relative aspect-square rounded-xl border flex flex-col items-center justify-center gap-2 p-3 text-xs font-medium transition ${
                       active
                         ? "border-primary bg-primary/15 text-foreground"
                         : "border-border bg-muted hover:bg-secondary"
@@ -279,7 +279,8 @@ function Index() {
                     >
                       {active && <Check className="h-4 w-4" strokeWidth={3} />}
                     </span>
-                    {a}
+                    <span className="mb-1">{a.icon}</span>
+                    {a.label}
                   </button>
                 );
               })}
@@ -291,14 +292,14 @@ function Index() {
             <h2 className="text-sm font-semibold mb-3">3. 피부 타입</h2>
             <div role="radiogroup" className="grid grid-cols-3 gap-3">
               {SKIN_TYPES.map((s) => {
-                const active = skinType === s;
+                const active = skinType === s.label;
                 return (
                   <button
-                    key={s}
+                    key={s.label}
                     role="radio"
                     aria-checked={active}
-                    onClick={() => setSkinType(s)}
-                    className={`relative aspect-square rounded-xl border flex flex-col items-center justify-end p-3 text-xs font-medium transition ${
+                    onClick={() => setSkinType(s.label)}
+                    className={`relative aspect-square rounded-xl border flex flex-col items-center justify-center gap-2 p-3 text-xs font-medium transition ${
                       active
                         ? "border-primary bg-primary/15 text-foreground"
                         : "border-border bg-muted hover:bg-secondary"
@@ -311,7 +312,8 @@ function Index() {
                     >
                       {active && <Check className="h-4 w-4" strokeWidth={3} />}
                     </span>
-                    {s}
+                    <span className="mb-1">{s.icon}</span>
+                    {s.label}
                   </button>
                 );
               })}
@@ -323,14 +325,14 @@ function Index() {
             <h2 className="text-sm font-semibold mb-3">4. 템플릿 설정</h2>
             <div role="radiogroup" className="grid grid-cols-2 gap-3">
               {TEMPLATES.map((t) => {
-                const active = designType === t;
+                const active = designType === t.label;
                 return (
                   <button
-                    key={t}
+                    key={t.label}
                     role="radio"
                     aria-checked={active}
-                    onClick={() => setDesignType(t)}
-                    className={`relative h-32 rounded-xl border flex flex-col items-center justify-end p-3 text-sm font-medium transition ${
+                    onClick={() => setDesignType(t.label)}
+                    className={`relative h-32 rounded-xl border flex flex-col items-center justify-center gap-2 p-3 text-sm font-medium transition ${
                       active
                         ? "border-primary bg-primary/15"
                         : "border-border bg-muted hover:bg-secondary"
@@ -343,7 +345,8 @@ function Index() {
                     >
                       {active && <Check className="h-4 w-4" strokeWidth={3} />}
                     </span>
-                    {t}
+                    <span className="mb-1">{t.icon}</span>
+                    {t.label}
                   </button>
                 );
               })}
