@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
-import { Check, Upload, X } from "lucide-react";
+import { Check, Loader2, Upload, X } from "lucide-react";
 import {
   Select,
   SelectContent,
