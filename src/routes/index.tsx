@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
-import { Check, Upload, X } from "lucide-react";
+import { Check, Loader2, Upload, X } from "lucide-react";
 import {
   Select,
   SelectContent,
@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
+import { callN8n } from "@/lib/n8n";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -45,6 +46,7 @@ function Index() {
   const [highlight, setHighlight] = useState<string>("");
   const [file, setFile] = useState<File | null>(null);
   const [dragOver, setDragOver] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -71,7 +73,7 @@ function Index() {
     setFile(f);
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     const resolvedCategory =
       productCategory === "기타" ? productCategoryOther.trim() : productCategory;
 
@@ -90,11 +92,18 @@ function Index() {
       age_group: ageGroup,
       design_type: designType,
       highlight: highlight.trim() || undefined,
+      file,
     };
 
-    // TODO: n8n webhook 연동 (file은 multipart 로 함께 전송)
-    console.log("submit payload", payload, "file:", file);
-    toast.success("콘텐츠 생성 요청을 보냈습니다.");
+    setIsSubmitting(true);
+    try {
+      await callN8n(payload);
+      toast.success("콘텐츠 생성 요청을 보냈습니다.");
+    } catch (err: any) {
+      toast.error(err?.message || "요청 중 오류가 발생했습니다.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -307,9 +316,11 @@ function Index() {
         <div className="flex justify-end mt-10">
           <button
             onClick={handleSubmit}
-            className="rounded-xl bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground hover:bg-primary/90 transition shadow-sm"
+            disabled={isSubmitting}
+            className="rounded-xl bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground hover:bg-primary/90 transition shadow-sm disabled:opacity-50 disabled:cursor-not-allowed inline-flex items-center gap-2"
           >
-            콘텐츠 생성하기
+            {isSubmitting && <Loader2 className="h-4 w-4 animate-spin" />}
+            {isSubmitting ? "요청 중..." : "콘텐츠 생성하기"}
           </button>
         </div>
       </div>
