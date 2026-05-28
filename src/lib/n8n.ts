@@ -4,22 +4,33 @@ export interface N8nPayload {
   age_group: string;
   design_type: string;
   highlight?: string;
-  file?: { name: string; size: number; type: string } | null;
+  file?: File | null;
 }
 
 export async function callN8n(payload: N8nPayload) {
-  const url = import.meta.env.VITE_N8N_WEBHOOK_URL as string | undefined;
+  const url = "http://localhost:5678/webhook-test/8c751a92-69cb-48d1-b747-5ea897123823";
 
-  if (!url) {
-    throw new Error("VITE_N8N_WEBHOOK_URL 환경변수가 설정되지 않았습니다.");
+  if (!url || url.includes("여기에")) {
+    throw new Error("n8n 웹훅 URL이 입력되지 않았습니다. 코드를 확인해주세요.");
+  }
+
+  const formData = new FormData();
+
+  formData.append("product_category", payload.product_category);
+  formData.append("skin_type", payload.skin_type);
+  formData.append("age_group", payload.age_group);
+  formData.append("design_type", payload.design_type);
+  if (payload.highlight) {
+    formData.append("highlight", payload.highlight);
+  }
+
+  if (payload.file) {
+    formData.append("file", payload.file);
   }
 
   const response = await fetch(url, {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(payload),
+    body: formData,
   });
 
   if (!response.ok) {
