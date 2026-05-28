@@ -316,9 +316,11 @@ function Index() {
         <div className="flex justify-end mt-10">
           <button
             onClick={handleSubmit}
-            className="rounded-xl bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground hover:bg-primary/90 transition shadow-sm"
+            disabled={isSubmitting}
+            className="rounded-xl bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground hover:bg-primary/90 transition shadow-sm disabled:opacity-50 disabled:cursor-not-allowed inline-flex items-center gap-2"
           >
-            콘텐츠 생성하기
+            {isSubmitting && <Loader2 className="h-4 w-4 animate-spin" />}
+            {isSubmitting ? "요청 중..." : "콘텐츠 생성하기"}
           </button>
         </div>
       </div>
