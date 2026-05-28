@@ -73,7 +73,7 @@ function Index() {
     setFile(f);
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     const resolvedCategory =
       productCategory === "기타" ? productCategoryOther.trim() : productCategory;
 
@@ -92,11 +92,18 @@ function Index() {
       age_group: ageGroup,
       design_type: designType,
       highlight: highlight.trim() || undefined,
+      file,
     };
 
-    // TODO: n8n webhook 연동 (file은 multipart 로 함께 전송)
-    console.log("submit payload", payload, "file:", file);
-    toast.success("콘텐츠 생성 요청을 보냈습니다.");
+    setIsSubmitting(true);
+    try {
+      await callN8n(payload);
+      toast.success("콘텐츠 생성 요청을 보냈습니다.");
+    } catch (err: any) {
+      toast.error(err?.message || "요청 중 오류가 발생했습니다.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
