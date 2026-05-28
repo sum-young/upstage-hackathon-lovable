@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Check, Upload, X } from "lucide-react";
 import {
   Select,
@@ -46,6 +46,20 @@ function Index() {
   const [file, setFile] = useState<File | null>(null);
   const [dragOver, setDragOver] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    const resolvedCategory =
+      productCategory === "기타" ? productCategoryOther.trim() : productCategory;
+    const state = {
+      product_category: resolvedCategory || undefined,
+      skin_type: skinType,
+      age_group: ageGroup,
+      design_type: designType,
+      highlight: highlight.trim() || undefined,
+      file: file ? { name: file.name, size: file.size, type: file.type } : null,
+    };
+    console.log("현재 상태:", state);
+  }, [productCategory, productCategoryOther, skinType, ageGroup, designType, highlight, file]);
 
   const handleFiles = (files: FileList | null) => {
     if (!files || files.length === 0) return;
