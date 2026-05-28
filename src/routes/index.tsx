@@ -23,9 +23,23 @@ export const Route = createFileRoute("/")({
 });
 
 const PRODUCT_CATEGORIES = ["세럼", "토너", "크림", "기타"];
-const AGES = ["10대 후반", "20대", "30대", "40대"];
-const SKIN_TYPES = ["건성", "지성", "민감성"];
-const TEMPLATES = ["올리브영", "아마존"];
+const AGES: { label: string; icon: React.ReactNode }[] = [
+  { label: "10대", icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="w-8 h-8"><circle cx="12" cy="8" r="3.5"/><path d="M8 20c0-2.2 1.8-4 4-4s4 1.8 4 4"/></svg> },
+  { label: "20대", icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="w-8 h-8"><circle cx="12" cy="7.5" r="3"/><path d="M7 21c0-2.8 2.2-5 5-5s5 2.2 5 5"/></svg> },
+  { label: "30대", icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="w-8 h-8"><circle cx="12" cy="7.5" r="3"/><path d="M6 21c0-3.3 2.7-6 6-6s6 2.7 6 6"/></svg> },
+  { label: "40대", icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="w-8 h-8"><circle cx="12" cy="7" r="2.8"/><path d="M6 21c0-3.3 2.7-6 6-6s6 2.7 6 6"/><path d="M10 11h4" strokeDasharray="1.5 1.5"/></svg> },
+];
+
+const SKIN_TYPES: { label: string; icon: React.ReactNode }[] = [
+  { label: "건성", icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" className="w-8 h-8"><circle cx="12" cy="12" r="9"/><path d="M8 10c1.5 2 2.5 2 4 0"/><path d="M10 14c1 1.5 3 1.5 4 0"/><path d="M7 8l1 1M17 8l-1 1M6 17l2-1M18 17l-2-1" strokeWidth="1.2"/></svg> },
+  { label: "지성", icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" className="w-8 h-8"><circle cx="12" cy="12" r="9"/><path d="M9 10c1.2 1.5 2.8 1.5 4 0"/><path d="M10 14c1 .8 3 .8 4 0"/><path d="M14.5 6.5c0 1.5-1 2-1 3.5"/><circle cx="15.5" cy="6.5" r=".8" fill="currentColor" stroke="none"/></svg> },
+  { label: "민감성", icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" className="w-8 h-8"><circle cx="12" cy="12" r="9"/><path d="M8 10c1.5 2 2.5 2 4 0"/><path d="M10 14c1 1.5 3 1.5 4 0"/><path d="M6 13c2-1 4-1 6 0s4 1 6 0" opacity=".35"/><circle cx="9" cy="16" r="1.2" fill="currentColor" opacity=".25" stroke="none"/><circle cx="15" cy="16" r="1.2" fill="currentColor" opacity=".25" stroke="none"/></svg> },
+];
+
+const TEMPLATES: { label: string; icon: React.ReactNode }[] = [
+  { label: "올리브영", icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" className="w-10 h-10"><rect x="6" y="2" width="12" height="20" rx="2"/><path d="M10 18h4"/></svg> },
+  { label: "아마존", icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" className="w-10 h-10"><rect x="2" y="4" width="20" height="14" rx="2"/><path d="M8 18h8"/><path d="M12 21v-3"/></svg> },
+];
 const ACCEPTED = [
   "application/pdf",
   "application/vnd.ms-excel",
@@ -245,14 +259,14 @@ function Index() {
             <h2 className="text-sm font-semibold mb-3">2. 타깃 연령층 설정</h2>
             <div role="radiogroup" className="grid grid-cols-4 gap-3">
               {AGES.map((a) => {
-                const active = ageGroup === a;
+                const active = ageGroup === a.label;
                 return (
                   <button
-                    key={a}
+                    key={a.label}
                     role="radio"
                     aria-checked={active}
-                    onClick={() => setAgeGroup(a)}
-                    className={`relative aspect-square rounded-xl border flex flex-col items-center justify-end p-3 text-xs font-medium transition ${
+                    onClick={() => setAgeGroup(a.label)}
+                    className={`relative aspect-square rounded-xl border flex flex-col items-center justify-center gap-2 p-3 text-xs font-medium transition ${
                       active
                         ? "border-primary bg-primary/15 text-foreground"
                         : "border-border bg-muted hover:bg-secondary"
@@ -265,7 +279,8 @@ function Index() {
                     >
                       {active && <Check className="h-4 w-4" strokeWidth={3} />}
                     </span>
-                    {a}
+                    <span className="mb-1">{a.icon}</span>
+                    {a.label}
                   </button>
                 );
               })}
@@ -277,14 +292,14 @@ function Index() {
             <h2 className="text-sm font-semibold mb-3">3. 피부 타입</h2>
             <div role="radiogroup" className="grid grid-cols-3 gap-3">
               {SKIN_TYPES.map((s) => {
-                const active = skinType === s;
+                const active = skinType === s.label;
                 return (
                   <button
-                    key={s}
+                    key={s.label}
                     role="radio"
                     aria-checked={active}
-                    onClick={() => setSkinType(s)}
-                    className={`relative aspect-square rounded-xl border flex flex-col items-center justify-end p-3 text-xs font-medium transition ${
+                    onClick={() => setSkinType(s.label)}
+                    className={`relative aspect-square rounded-xl border flex flex-col items-center justify-center gap-2 p-3 text-xs font-medium transition ${
                       active
                         ? "border-primary bg-primary/15 text-foreground"
                         : "border-border bg-muted hover:bg-secondary"
@@ -297,7 +312,8 @@ function Index() {
                     >
                       {active && <Check className="h-4 w-4" strokeWidth={3} />}
                     </span>
-                    {s}
+                    <span className="mb-1">{s.icon}</span>
+                    {s.label}
                   </button>
                 );
               })}
@@ -309,14 +325,14 @@ function Index() {
             <h2 className="text-sm font-semibold mb-3">4. 템플릿 설정</h2>
             <div role="radiogroup" className="grid grid-cols-2 gap-3">
               {TEMPLATES.map((t) => {
-                const active = designType === t;
+                const active = designType === t.label;
                 return (
                   <button
-                    key={t}
+                    key={t.label}
                     role="radio"
                     aria-checked={active}
-                    onClick={() => setDesignType(t)}
-                    className={`relative h-32 rounded-xl border flex flex-col items-center justify-end p-3 text-sm font-medium transition ${
+                    onClick={() => setDesignType(t.label)}
+                    className={`relative h-32 rounded-xl border flex flex-col items-center justify-center gap-2 p-3 text-sm font-medium transition ${
                       active
                         ? "border-primary bg-primary/15"
                         : "border-border bg-muted hover:bg-secondary"
@@ -329,7 +345,8 @@ function Index() {
                     >
                       {active && <Check className="h-4 w-4" strokeWidth={3} />}
                     </span>
-                    {t}
+                    <span className="mb-1">{t.icon}</span>
+                    {t.label}
                   </button>
                 );
               })}
