@@ -37,6 +37,37 @@ function isValidFile(f: File) {
   return /\.(pdf|xlsx|xls)$/i.test(f.name);
 }
 
+function ResultPanel({
+  title,
+  value,
+  onCopy,
+}: {
+  title: string;
+  value: string;
+  onCopy: () => void;
+}) {
+  return (
+    <section className="rounded-2xl border-2 border-primary/30 bg-secondary/30 p-5">
+      <div className="flex items-center justify-between mb-3">
+        <h2 className="text-sm font-semibold">{title}</h2>
+        <button
+          onClick={onCopy}
+          className="inline-flex items-center gap-1 rounded-md border border-primary/40 bg-card px-2.5 py-1.5 text-xs font-medium text-foreground hover:bg-primary/10 transition"
+          aria-label={`${title} 복사하기`}
+        >
+          <Clipboard className="h-3.5 w-3.5" />
+          복사
+        </button>
+      </div>
+      <textarea
+        value={value}
+        readOnly
+        className="w-full min-h-[360px] resize-y rounded-xl border border-border bg-card p-4 text-sm leading-relaxed text-foreground focus:outline-none focus:border-primary"
+      />
+    </section>
+  );
+}
+
 function Index() {
   const [productCategory, setProductCategory] = useState<string>("");
   const [productCategoryOther, setProductCategoryOther] = useState<string>("");
