@@ -55,10 +55,12 @@ function ResultPanel({
   title,
   value,
   onCopy,
+  minHeight = "min-h-[360px]",
 }: {
   title: string;
   value: string;
   onCopy: () => void;
+  minHeight?: string;
 }) {
   return (
     <section className="rounded-2xl border-2 border-primary/30 bg-secondary/30 p-5">
@@ -76,7 +78,7 @@ function ResultPanel({
       <textarea
         value={value}
         readOnly
-        className="w-full min-h-[360px] resize-y rounded-xl border border-border bg-card p-4 text-sm leading-relaxed text-foreground focus:outline-none focus:border-primary"
+        className={`w-full ${minHeight} resize-y rounded-xl border border-border bg-card p-4 text-sm leading-relaxed text-foreground focus:outline-none focus:border-primary`}
       />
     </section>
   );
