@@ -33,7 +33,7 @@ const SKIN_TYPES: { label: string; icon: React.ReactNode }[] = [
   {
     label: "건성",
     icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" className="w-8 h-8">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" className="icon-art w-8 h-8">
         <circle cx="12" cy="12" r="9" />
         <path d="M8 10c1.5 2 2.5 2 4 0" />
         <path d="M10 14c1 1.5 3 1.5 4 0" />
@@ -44,7 +44,7 @@ const SKIN_TYPES: { label: string; icon: React.ReactNode }[] = [
   {
     label: "지성",
     icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" className="w-8 h-8">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" className="icon-art w-8 h-8">
         <circle cx="12" cy="12" r="9" />
         <path d="M9 10c1.2 1.5 2.8 1.5 4 0" />
         <path d="M10 14c1 .8 3 .8 4 0" />
@@ -56,7 +56,7 @@ const SKIN_TYPES: { label: string; icon: React.ReactNode }[] = [
   {
     label: "민감성",
     icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" className="w-8 h-8">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" className="icon-art w-8 h-8">
         <circle cx="12" cy="12" r="9" />
         <path d="M8 10c1.5 2 2.5 2 4 0" />
         <path d="M10 14c1 1.5 3 1.5 4 0" />
@@ -69,7 +69,7 @@ const SKIN_TYPES: { label: string; icon: React.ReactNode }[] = [
   {
     label: "복합성",
     icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" className="w-8 h-8">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" className="icon-art w-8 h-8">
         <circle cx="12" cy="12" r="9" />
         <path d="M12 3v18" strokeWidth="1.2" opacity=".6" />
         {/* 건성: 좌측 */}
@@ -88,13 +88,13 @@ const TEMPLATES: { label: string; icon: React.ReactNode }[] = [
   {
     label: "올리브영",
     icon: (
-      <img src={oliveYoungLogo} alt="올리브영" className="h-8 w-auto object-contain" />
+      <img src={oliveYoungLogo} alt="올리브영" className="icon-art h-8 w-auto object-contain" />
     ),
   },
   {
     label: "아마존",
     icon: (
-      <img src={amazonLogo} alt="아마존" className="h-10 w-auto object-contain" />
+      <img src={amazonLogo} alt="아마존" className="icon-art h-10 w-auto object-contain" />
     ),
   },
 ];
@@ -464,20 +464,20 @@ function Index() {
                     role="radio"
                     aria-checked={active}
                     onClick={() => setAgeGroup(a.label)}
-                    className={`relative aspect-square rounded-xl border flex flex-col items-center justify-center gap-1 p-3 text-sm font-medium transition ${
+                    className={`relative aspect-square rounded-xl border flex flex-col items-center justify-center gap-[6%] p-[6%] text-[clamp(11px,3.2cqw,15px)] font-medium transition @container ${
                       active
                         ? "border-primary bg-primary/15 text-foreground"
                         : "border-border bg-muted hover:bg-secondary"
                     }`}
                   >
                     <span
-                      className={`absolute top-2 right-2 h-6 w-6 rounded-full flex items-center justify-center transition ${
+                      className={`absolute top-[6%] right-[6%] h-[18%] w-[18%] min-h-5 min-w-5 max-h-7 max-w-7 rounded-full flex items-center justify-center transition ${
                         active ? "bg-primary text-primary-foreground" : "bg-card border border-border"
                       }`}
                     >
-                      {active && <Check className="h-4 w-4" strokeWidth={3} />}
+                      {active && <Check className="h-1/2 w-1/2" strokeWidth={3} />}
                     </span>
-                    <img src={a.image} alt={a.label} className="h-16 w-16 rounded-lg object-cover" />
+                    <img src={a.image} alt={a.label} className="w-[55%] aspect-square h-auto rounded-lg object-cover" />
                     <span>{a.label}</span>
                   </button>
                 );
@@ -497,20 +497,20 @@ function Index() {
                     role="radio"
                     aria-checked={active}
                     onClick={() => setSkinType(s.label)}
-                    className={`relative aspect-square rounded-xl border flex flex-col items-center justify-center gap-2 p-3 text-xs font-medium transition ${
+                    className={`relative aspect-square rounded-xl border flex flex-col items-center justify-center gap-[6%] p-[8%] text-[clamp(10px,3cqw,13px)] font-medium transition @container [&_svg.icon-art]:w-[45%] [&_svg.icon-art]:h-auto [&_svg.icon-art]:aspect-square ${
                       active
                         ? "border-primary bg-primary/15 text-foreground"
                         : "border-border bg-muted hover:bg-secondary"
                     }`}
                   >
                     <span
-                      className={`absolute top-2 right-2 h-6 w-6 rounded-full flex items-center justify-center transition ${
+                      className={`absolute top-[6%] right-[6%] h-[22%] w-[22%] min-h-5 min-w-5 max-h-7 max-w-7 rounded-full flex items-center justify-center transition ${
                         active ? "bg-primary text-primary-foreground" : "bg-card border border-border"
                       }`}
                     >
-                      {active && <Check className="h-4 w-4" strokeWidth={3} />}
+                      {active && <Check className="h-1/2 w-1/2" strokeWidth={3} />}
                     </span>
-                    <span className="mb-1">{s.icon}</span>
+                    <span className="mb-1 contents">{s.icon}</span>
                     {s.label}
                   </button>
                 );
@@ -530,18 +530,18 @@ function Index() {
                     role="radio"
                     aria-checked={active}
                     onClick={() => setDesignType(t.label)}
-                    className={`relative h-32 rounded-xl border flex flex-col items-center justify-center gap-2 p-3 text-sm font-medium transition ${
+                    className={`relative aspect-[5/3] rounded-xl border flex flex-col items-center justify-center gap-[4%] p-[5%] text-[clamp(12px,3cqw,15px)] font-medium transition @container [&_.icon-art]:h-[45%] [&_.icon-art]:w-auto ${
                       active ? "border-primary bg-primary/15" : "border-border bg-muted hover:bg-secondary"
                     }`}
                   >
                     <span
-                      className={`absolute top-2 right-2 h-6 w-6 rounded-full flex items-center justify-center transition ${
+                      className={`absolute top-[5%] right-[5%] h-[16%] aspect-square min-h-5 max-h-7 rounded-full flex items-center justify-center transition ${
                         active ? "bg-primary text-primary-foreground" : "bg-card border border-border"
                       }`}
                     >
-                      {active && <Check className="h-4 w-4" strokeWidth={3} />}
+                      {active && <Check className="h-1/2 w-1/2" strokeWidth={3} />}
                     </span>
-                    <span className="mb-1">{t.icon}</span>
+                    <span className="contents">{t.icon}</span>
                     {t.label}
                   </button>
                 );
