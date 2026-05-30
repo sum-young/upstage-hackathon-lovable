@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 import { ArrowLeft, Check, Clipboard, Loader2, Upload, X } from "lucide-react";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Input } from "@/components/ui/input";
+
 import { toast } from "sonner";
 import { callN8n } from "@/lib/n8n";
 
@@ -16,7 +16,7 @@ export const Route = createFileRoute("/")({
   component: Index,
 });
 
-const PRODUCT_CATEGORIES = ["세럼", "토너", "크림", "기타"];
+const PRODUCT_CATEGORIES = ["토너", "앰플", "세럼", "로션", "수분크림", "안티에이징 크림", "립밤", "선스크린"];
 const AGES: { label: string; icon: React.ReactNode }[] = [
   {
     label: "10대",
@@ -163,7 +163,6 @@ function ResultPanel({
 
 function Index() {
   const [productCategory, setProductCategory] = useState<string>("");
-  const [productCategoryOther, setProductCategoryOther] = useState<string>("");
   const [ageGroup, setAgeGroup] = useState<string>("30대");
   const [skinType, setSkinType] = useState<string>("건성");
   const [designType, setDesignType] = useState<string>("올리브영");
@@ -197,9 +196,8 @@ function Index() {
         : "거의 다 왔어요! 매력적인 카피를 작성 중입니다... (최대 40초 정도 소요될 수 있어요)";
 
   useEffect(() => {
-    const resolvedCategory = productCategory === "기타" ? productCategoryOther.trim() : productCategory;
     const state = {
-      product_category: resolvedCategory || undefined,
+      product_category: productCategory || undefined,
       skin_type: skinType,
       age_group: ageGroup,
       design_type: designType,
@@ -207,7 +205,7 @@ function Index() {
       file: file ? { name: file.name, size: file.size, type: file.type } : null,
     };
     console.log("현재 상태:", state);
-  }, [productCategory, productCategoryOther, skinType, ageGroup, designType, highlight, file]);
+  }, [productCategory, skinType, ageGroup, designType, highlight, file]);
 
   const handleFiles = (files: FileList | null) => {
     if (!files || files.length === 0) return;
@@ -220,9 +218,7 @@ function Index() {
   };
 
   const handleSubmit = async () => {
-    const resolvedCategory = productCategory === "기타" ? productCategoryOther.trim() : productCategory;
-
-    if (!resolvedCategory) {
+    if (!productCategory) {
       toast.error("제품 유형을 선택해주세요.");
       return;
     }
@@ -232,7 +228,7 @@ function Index() {
     }
 
     const payload = {
-      product_category: resolvedCategory,
+      product_category: productCategory,
       skin_type: skinType,
       age_group: ageGroup,
       design_type: designType,
@@ -243,7 +239,7 @@ function Index() {
     setIsSubmitting(true);
     const start = Date.now();
     const fallback = {
-      copy: `[${resolvedCategory}] ${ageGroup} ${skinType} 피부를 위한 데일리 솔루션\n\n매일 사용해도 부담 없는 저자극 포뮬러로, ${skinType} 피부에 꼭 필요한 수분과 진정 케어를 한 번에.\n\n· 핵심 성분: 나이아신아마이드, 히알루론산, 병풀추출물\n· 산뜻하게 스며드는 가벼운 텍스처\n· 비건 인증 / 동물 실험 없음${highlight ? `\n· 강조 포인트: ${highlight}` : ""}\n\n지금, 가장 깨끗한 선택을 시작하세요.`,
+      copy: `[${productCategory}] ${ageGroup} ${skinType} 피부를 위한 데일리 솔루션\n\n매일 사용해도 부담 없는 저자극 포뮬러로, ${skinType} 피부에 꼭 필요한 수분과 진정 케어를 한 번에.\n\n· 핵심 성분: 나이아신아마이드, 히알루론산, 병풀추출물\n· 산뜻하게 스며드는 가벼운 텍스처\n· 비건 인증 / 동물 실험 없음${highlight ? `\n· 강조 포인트: ${highlight}` : ""}\n\n지금, 가장 깨끗한 선택을 시작하세요.`,
       design: `${designType} 템플릿 기반 상세페이지 레이아웃 가이드\n\n1) 히어로 섹션\n  - 연녹색(#E8F1E4) 배경 + 제품 컷아웃 이미지\n  - 큰 세리프 헤드라인 1줄 + 서브 카피 1줄\n\n2) 핵심 베네핏 3분할\n  - 아이콘 + 헤드라인 + 1줄 설명\n  - 여백 넉넉히, 라인 디바이더 사용\n\n3) 전성분 하이라이트\n  - 주요 성분 4~6종 카드 그리드\n  - 각 성분 효능을 한 줄로 요약\n\n4) 사용법 / 텍스처 이미지\n  - 핸드 스와치, 사용 단계 3컷\n\n5) 인증/안전성 배지\n  - 비건, EWG, 임상 결과 등 신뢰 요소 배치`,
     };
     try {
@@ -473,14 +469,6 @@ function Index() {
                 ))}
               </SelectContent>
             </Select>
-            {productCategory === "기타" && (
-              <Input
-                value={productCategoryOther}
-                onChange={(e) => setProductCategoryOther(e.target.value)}
-                placeholder="제품 유형을 직접 입력해주세요"
-                className="mt-3 rounded-xl border-border bg-muted px-4 py-3 text-sm h-auto focus-visible:border-primary focus-visible:bg-card"
-              />
-            )}
           </section>
 
           {/* 2. 타깃 연령층 */}
