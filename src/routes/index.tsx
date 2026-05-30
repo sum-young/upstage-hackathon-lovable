@@ -375,13 +375,36 @@ function Index() {
             />
           </div>
 
-          {result.warnings && (
-            <ResultPanel
-              title="주의사항 (Warnings)"
-              value={result.warnings}
-              onCopy={() => copyText(result.warnings!, "주의사항")}
-              minHeight="min-h-[120px]"
-            />
+          {result.warnings && result.warnings.length > 0 && (
+            <section className="mt-10 rounded-2xl border-2 border-primary/30 bg-secondary/30 p-5">
+              <h2 className="text-sm font-semibold mb-4">주의사항 (Warnings)</h2>
+              <div className="flex flex-col gap-3">
+                {result.warnings.map((w, i) => {
+                  const sev = (w.severity || "").toLowerCase();
+                  const styles =
+                    sev === "high"
+                      ? { box: "bg-red-50 border-red-300", text: "text-red-700", label: "위험성 높음" }
+                      : sev === "medium"
+                        ? { box: "bg-yellow-50 border-yellow-300", text: "text-yellow-700", label: "위험성 존재" }
+                        : { box: "bg-card border-border", text: "text-muted-foreground", label: "참고사항" };
+                  return (
+                    <div
+                      key={i}
+                      className={`flex items-stretch rounded-xl border ${styles.box} overflow-hidden`}
+                    >
+                      <div
+                        className={`w-[25%] min-w-[100px] flex items-center justify-center p-3 text-sm font-semibold ${styles.text} border-r ${styles.box}`}
+                      >
+                        {styles.label}
+                      </div>
+                      <div className="flex-1 p-3 text-sm leading-relaxed text-foreground bg-card">
+                        {w.message}
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </section>
           )}
 
           <div className="flex justify-end mt-8">
