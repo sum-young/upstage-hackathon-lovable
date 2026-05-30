@@ -12,7 +12,6 @@ export async function callN8n(payload: N8nPayload) {
   if (!url || url.includes("여기에")) {
     throw new Error("n8n 웹훅 URL이 입력되지 않았습니다. 코드를 확인해주세요.");
   }
-  a;
 
   const formData = new FormData();
 
