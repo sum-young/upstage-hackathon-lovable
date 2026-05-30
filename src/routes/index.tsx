@@ -497,20 +497,20 @@ function Index() {
                     role="radio"
                     aria-checked={active}
                     onClick={() => setSkinType(s.label)}
-                    className={`relative aspect-square rounded-xl border flex flex-col items-center justify-center gap-2 p-3 text-xs font-medium transition ${
+                    className={`relative aspect-square rounded-xl border flex flex-col items-center justify-center gap-[6%] p-[8%] text-[clamp(10px,3cqw,13px)] font-medium transition @container [&_svg.icon-art]:w-[45%] [&_svg.icon-art]:h-auto [&_svg.icon-art]:aspect-square ${
                       active
                         ? "border-primary bg-primary/15 text-foreground"
                         : "border-border bg-muted hover:bg-secondary"
                     }`}
                   >
                     <span
-                      className={`absolute top-2 right-2 h-6 w-6 rounded-full flex items-center justify-center transition ${
+                      className={`absolute top-[6%] right-[6%] h-[22%] w-[22%] min-h-5 min-w-5 max-h-7 max-w-7 rounded-full flex items-center justify-center transition ${
                         active ? "bg-primary text-primary-foreground" : "bg-card border border-border"
                       }`}
                     >
-                      {active && <Check className="h-4 w-4" strokeWidth={3} />}
+                      {active && <Check className="h-1/2 w-1/2" strokeWidth={3} />}
                     </span>
-                    <span className="mb-1">{s.icon}</span>
+                    <span className="mb-1 contents">{s.icon}</span>
                     {s.label}
                   </button>
                 );
