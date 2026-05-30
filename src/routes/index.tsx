@@ -154,7 +154,7 @@ function ResultPanel({
 
 function Index() {
   const [productCategory, setProductCategory] = useState<string>("");
-  const [ageGroup, setAgeGroup] = useState<string>("30대");
+  const [ageGroup, setAgeGroup] = useState<string>("20/30대");
   const [skinType, setSkinType] = useState<string>("건성");
   const [designType, setDesignType] = useState<string>("올리브영");
   const [highlight, setHighlight] = useState<string>("");
