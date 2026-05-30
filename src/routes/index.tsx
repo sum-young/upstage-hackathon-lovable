@@ -462,7 +462,7 @@ function Index() {
                     role="radio"
                     aria-checked={active}
                     onClick={() => setAgeGroup(a.label)}
-                    className={`relative aspect-square rounded-xl border flex flex-col items-center justify-center gap-2 p-3 text-lg font-semibold transition ${
+                    className={`relative aspect-square rounded-xl border flex flex-col items-center justify-center gap-1 p-3 text-sm font-medium transition ${
                       active
                         ? "border-primary bg-primary/15 text-foreground"
                         : "border-border bg-muted hover:bg-secondary"
