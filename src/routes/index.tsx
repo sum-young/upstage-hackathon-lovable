@@ -321,7 +321,7 @@ function Index() {
       setResult({
         copy: copyFromServer ?? fallbackDump ?? fallback.copy,
         design: designFromServer ?? (fallbackDump ? "" : fallback.design),
-        warnings: warningsText,
+        warnings: warningsList,
       });
     } catch (err: any) {
       console.error("n8n 요청 실패, 하드코딩 결과로 대체:", err);
