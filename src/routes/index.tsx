@@ -475,7 +475,7 @@ function Index() {
                     >
                       {active && <Check className="h-4 w-4" strokeWidth={3} />}
                     </span>
-                    <img src={a.image} alt={a.label} className="h-12 w-12 rounded-lg object-cover" />
+                    <img src={a.image} alt={a.label} className="h-16 w-16 rounded-lg object-cover" />
                     <span>{a.label}</span>
                   </button>
                 );
