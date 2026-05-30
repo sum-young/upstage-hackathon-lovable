@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import { ArrowLeft, Check, Clipboard, Loader2, Upload, X } from "lucide-react";
 import oliveYoungLogo from "@/assets/oliveyoung-logo.png";
 import amazonLogo from "@/assets/amazon-logo.png";
+import brandLogo from "@/assets/brand-logo.png";
 import ageTeens from "@/assets/age-teens.png";
 import age2030s from "@/assets/age-2030s.png";
 import age40plus from "@/assets/age-40plus.png";
@@ -424,7 +425,8 @@ function Index() {
       <div className="mx-auto max-w-5xl rounded-3xl border border-border bg-card p-6 md:p-10 shadow-sm">
         <header className="flex items-center justify-between pb-8 border-b border-border">
           <div className="flex items-center gap-3">
-            <h1 className="text-xl font-semibold">클린뷰티 카피메이커</h1>
+            <img src={brandLogo} alt="COPY BLOOM AI" className="h-10 w-10 rounded-full object-cover" />
+            <h1 className="text-xl font-semibold">COPY BLOOM AI</h1>
           </div>
           <div className="flex items-center gap-3">
             <span className="text-sm text-muted-foreground">사용자 이름</span>
