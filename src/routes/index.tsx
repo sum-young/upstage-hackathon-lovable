@@ -170,6 +170,7 @@ function Index() {
     };
     try {
       const data = await callN8n(payload);
+      console.log("n8n 응답:", data);
       const finalResult = {
         copy: typeof data?.copy === "string" && data.copy ? data.copy : fallback.copy,
         design: typeof data?.design === "string" && data.design ? data.design : fallback.design,
@@ -177,10 +178,11 @@ function Index() {
       setResult(finalResult);
     } catch (err: any) {
       console.error("n8n 요청 실패, 하드코딩 결과로 대체:", err);
+      console.log("하드코딩 결과:", fallback);
       setResult(fallback);
     }
     const elapsed = Date.now() - start;
-    const remaining = Math.max(0, 6000 - elapsed);
+    const remaining = Math.max(0, 8000 - elapsed);
     await new Promise((resolve) => setTimeout(resolve, remaining));
     setStage("result");
     setIsSubmitting(false);
