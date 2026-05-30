@@ -28,7 +28,7 @@ const AGES: { label: string; icon: React.ReactNode }[] = [
     ),
   },
   {
-    label: "20대",
+    label: "20/30대",
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="w-8 h-8">
         <circle cx="12" cy="7.5" r="3" />
@@ -37,16 +37,7 @@ const AGES: { label: string; icon: React.ReactNode }[] = [
     ),
   },
   {
-    label: "30대",
-    icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="w-8 h-8">
-        <circle cx="12" cy="7.5" r="3" />
-        <path d="M6 21c0-3.3 2.7-6 6-6s6 2.7 6 6" />
-      </svg>
-    ),
-  },
-  {
-    label: "40대",
+    label: "40대 이상",
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="w-8 h-8">
         <circle cx="12" cy="7" r="2.8" />
@@ -163,7 +154,7 @@ function ResultPanel({
 
 function Index() {
   const [productCategory, setProductCategory] = useState<string>("");
-  const [ageGroup, setAgeGroup] = useState<string>("30대");
+  const [ageGroup, setAgeGroup] = useState<string>("20/30대");
   const [skinType, setSkinType] = useState<string>("건성");
   const [designType, setDesignType] = useState<string>("올리브영");
   const [highlight, setHighlight] = useState<string>("");
@@ -474,7 +465,7 @@ function Index() {
           {/* 2. 타깃 연령층 */}
           <section>
             <h2 className="text-sm font-semibold mb-3">2. 타깃 연령층 설정</h2>
-            <div role="radiogroup" className="grid grid-cols-4 gap-3">
+            <div role="radiogroup" className="grid grid-cols-3 gap-3">
               {AGES.map((a) => {
                 const active = ageGroup === a.label;
                 return (
