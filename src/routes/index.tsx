@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 import { ArrowLeft, Check, Clipboard, Leaf, Loader2, Upload, X } from "lucide-react";
 import oliveYoungLogo from "@/assets/oliveyoung-logo.png";
+import amazonLogo from "@/assets/amazon-logo.png";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 import { toast } from "sonner";
@@ -98,11 +99,7 @@ const TEMPLATES: { label: string; icon: React.ReactNode }[] = [
   {
     label: "아마존",
     icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" className="w-10 h-10">
-        <rect x="2" y="4" width="20" height="14" rx="2" />
-        <path d="M8 18h8" />
-        <path d="M12 21v-3" />
-      </svg>
+      <img src={amazonLogo} alt="아마존" className="h-10 w-auto object-contain" />
     ),
   },
 ];
@@ -472,7 +469,7 @@ function Index() {
                     role="radio"
                     aria-checked={active}
                     onClick={() => setAgeGroup(a.label)}
-                    className={`relative aspect-square rounded-xl border flex flex-col items-center justify-center gap-2 p-3 text-xs font-medium transition ${
+                    className={`relative aspect-square rounded-xl border flex flex-col items-center justify-center p-3 text-lg font-semibold transition ${
                       active
                         ? "border-primary bg-primary/15 text-foreground"
                         : "border-border bg-muted hover:bg-secondary"
@@ -485,7 +482,6 @@ function Index() {
                     >
                       {active && <Check className="h-4 w-4" strokeWidth={3} />}
                     </span>
-                    <span className="mb-1">{a.icon}</span>
                     {a.label}
                   </button>
                 );
