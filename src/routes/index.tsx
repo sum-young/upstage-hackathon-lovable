@@ -464,20 +464,20 @@ function Index() {
                     role="radio"
                     aria-checked={active}
                     onClick={() => setAgeGroup(a.label)}
-                    className={`relative aspect-square rounded-xl border flex flex-col items-center justify-center gap-1 p-3 text-sm font-medium transition ${
+                    className={`relative aspect-square rounded-xl border flex flex-col items-center justify-center gap-[6%] p-[6%] text-[clamp(11px,3.2cqw,15px)] font-medium transition @container ${
                       active
                         ? "border-primary bg-primary/15 text-foreground"
                         : "border-border bg-muted hover:bg-secondary"
                     }`}
                   >
                     <span
-                      className={`absolute top-2 right-2 h-6 w-6 rounded-full flex items-center justify-center transition ${
+                      className={`absolute top-[6%] right-[6%] h-[18%] w-[18%] min-h-5 min-w-5 max-h-7 max-w-7 rounded-full flex items-center justify-center transition ${
                         active ? "bg-primary text-primary-foreground" : "bg-card border border-border"
                       }`}
                     >
-                      {active && <Check className="h-4 w-4" strokeWidth={3} />}
+                      {active && <Check className="h-1/2 w-1/2" strokeWidth={3} />}
                     </span>
-                    <img src={a.image} alt={a.label} className="h-16 w-16 rounded-lg object-cover" />
+                    <img src={a.image} alt={a.label} className="w-[55%] aspect-square h-auto rounded-lg object-cover" />
                     <span>{a.label}</span>
                   </button>
                 );
