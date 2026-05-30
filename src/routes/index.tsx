@@ -287,14 +287,27 @@ function Index() {
       );
 
       const rawWarnings = node?.warnings ?? node?.warning;
-      let warningsText: string | undefined;
+      let warningsList: WarningItem[] | undefined;
       if (Array.isArray(rawWarnings)) {
-        warningsText = rawWarnings.join("\n");
+        warningsList = rawWarnings
+          .map((w: any) => {
+            if (w && typeof w === "object") {
+              const message = typeof w.message === "string" ? w.message : "";
+              const severity = typeof w.severity === "string" ? w.severity : "low";
+              return message ? { message, severity } : null;
+            }
+            if (typeof w === "string" && w.trim()) {
+              return { message: w, severity: "low" };
+            }
+            return null;
+          })
+          .filter(Boolean) as WarningItem[];
+        if (warningsList.length === 0) warningsList = undefined;
       } else if (typeof rawWarnings === "string" && rawWarnings.trim()) {
-        warningsText = rawWarnings;
+        warningsList = [{ message: rawWarnings, severity: "low" }];
       }
-      if (warningsText) {
-        console.log("n8n warnings:", warningsText);
+      if (warningsList) {
+        console.log("n8n warnings:", warningsList);
       }
 
       // 매칭되는 키가 전혀 없으면 전체 JSON을 보기 좋게 출력
