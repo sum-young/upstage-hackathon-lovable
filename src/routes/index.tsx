@@ -87,6 +87,22 @@ const SKIN_TYPES: { label: string; icon: React.ReactNode }[] = [
       </svg>
     ),
   },
+  {
+    label: "복합성",
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" className="w-8 h-8">
+        <circle cx="12" cy="12" r="9" />
+        <path d="M12 3v18" strokeWidth="1.2" opacity=".6" />
+        {/* 건성: 좌측 */}
+        <path d="M6.5 9.5l.8.8M6.5 15l1-.5" strokeWidth="1.2" />
+        <path d="M7.5 11.5c1 1.2 2 1.2 3 0" />
+        {/* 지성: 우측 */}
+        <path d="M14 11.5c.8 1 2 1 3 0" />
+        <path d="M16.5 7c0 1.2-.8 1.6-.8 2.8" />
+        <circle cx="17.2" cy="7" r=".6" fill="currentColor" stroke="none" />
+      </svg>
+    ),
+  },
 ];
 
 const TEMPLATES: { label: string; icon: React.ReactNode }[] = [
