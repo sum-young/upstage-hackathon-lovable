@@ -28,7 +28,7 @@ const AGES: { label: string; icon: React.ReactNode }[] = [
     ),
   },
   {
-    label: "20대",
+    label: "20/30대",
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="w-8 h-8">
         <circle cx="12" cy="7.5" r="3" />
@@ -37,16 +37,7 @@ const AGES: { label: string; icon: React.ReactNode }[] = [
     ),
   },
   {
-    label: "30대",
-    icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="w-8 h-8">
-        <circle cx="12" cy="7.5" r="3" />
-        <path d="M6 21c0-3.3 2.7-6 6-6s6 2.7 6 6" />
-      </svg>
-    ),
-  },
-  {
-    label: "40대",
+    label: "40대 이상",
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="w-8 h-8">
         <circle cx="12" cy="7" r="2.8" />
