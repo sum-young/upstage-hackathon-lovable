@@ -239,7 +239,30 @@ function Index() {
   }
 
   return (
-    <div className="min-h-screen bg-background p-6 md:p-10">
+    <div className="min-h-screen bg-background p-6 md:p-10 relative">
+      {isSubmitting && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-primary/10 backdrop-blur-sm">
+          <div className="flex flex-col items-center gap-5 rounded-3xl border-2 border-primary/40 bg-card px-10 py-8 shadow-xl max-w-md mx-4">
+            <div className="relative">
+              <div className="h-14 w-14 rounded-full border-4 border-primary/20" />
+              <Loader2 className="absolute inset-0 h-14 w-14 animate-spin text-primary" />
+            </div>
+            <p className="text-sm font-medium text-foreground text-center min-h-[2.5rem] flex items-center">
+              {loadingMessage}
+            </p>
+            <div className="flex gap-1.5">
+              {[0, 3, 6].map((t) => (
+                <span
+                  key={t}
+                  className={`h-1.5 w-8 rounded-full transition ${
+                    loadingElapsed >= t ? "bg-primary" : "bg-primary/20"
+                  }`}
+                />
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
       <div className="mx-auto max-w-5xl rounded-3xl border border-border bg-card p-6 md:p-10 shadow-sm">
         <header className="flex items-center justify-between pb-8 border-b border-border">
           <div className="flex items-center gap-3">
