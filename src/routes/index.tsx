@@ -92,9 +92,29 @@ function Index() {
   const [file, setFile] = useState<File | null>(null);
   const [dragOver, setDragOver] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [loadingElapsed, setLoadingElapsed] = useState(0);
   const [stage, setStage] = useState<"input" | "result">("input");
   const [result, setResult] = useState<{ copy: string; design: string } | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    if (!isSubmitting) {
+      setLoadingElapsed(0);
+      return;
+    }
+    const start = Date.now();
+    const id = setInterval(() => {
+      setLoadingElapsed(Math.floor((Date.now() - start) / 1000));
+    }, 200);
+    return () => clearInterval(id);
+  }, [isSubmitting]);
+
+  const loadingMessage =
+    loadingElapsed < 3
+      ? "전성분 파일(PDF)을 분석하고 있습니다..."
+      : loadingElapsed < 6
+      ? `선택한 ${designType} 톤앤매너를 학습 중입니다...`
+      : "거의 다 왔어요! 매력적인 카피를 작성 중입니다...";
 
   useEffect(() => {
     const resolvedCategory =
