@@ -110,11 +110,11 @@ function Index() {
   }, [isSubmitting]);
 
   const loadingMessage =
-    loadingElapsed < 3
+    loadingElapsed < 10
       ? "전성분 파일(PDF)을 분석하고 있습니다..."
-      : loadingElapsed < 6
+      : loadingElapsed < 20
       ? `선택한 ${designType} 톤앤매너를 학습 중입니다...`
-      : "거의 다 왔어요! 매력적인 카피를 작성 중입니다...";
+      : "거의 다 왔어요! 매력적인 카피를 작성 중입니다... (최대 40초 정도 소요될 수 있어요)";
 
   useEffect(() => {
     const resolvedCategory =
