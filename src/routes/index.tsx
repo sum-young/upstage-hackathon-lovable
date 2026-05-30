@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 import { ArrowLeft, Check, Clipboard, Leaf, Loader2, Upload, X } from "lucide-react";
+import oliveYoungLogo from "@/assets/oliveyoung-logo.png";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 import { toast } from "sonner";
@@ -91,10 +92,7 @@ const TEMPLATES: { label: string; icon: React.ReactNode }[] = [
   {
     label: "올리브영",
     icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" className="w-10 h-10">
-        <rect x="6" y="2" width="12" height="20" rx="2" />
-        <path d="M10 18h4" />
-      </svg>
+      <img src={oliveYoungLogo} alt="올리브영" className="h-8 w-auto object-contain" />
     ),
   },
   {
