@@ -530,18 +530,18 @@ function Index() {
                     role="radio"
                     aria-checked={active}
                     onClick={() => setDesignType(t.label)}
-                    className={`relative h-32 rounded-xl border flex flex-col items-center justify-center gap-2 p-3 text-sm font-medium transition ${
+                    className={`relative aspect-[5/3] rounded-xl border flex flex-col items-center justify-center gap-[4%] p-[5%] text-[clamp(12px,3cqw,15px)] font-medium transition @container [&_.icon-art]:h-[45%] [&_.icon-art]:w-auto ${
                       active ? "border-primary bg-primary/15" : "border-border bg-muted hover:bg-secondary"
                     }`}
                   >
                     <span
-                      className={`absolute top-2 right-2 h-6 w-6 rounded-full flex items-center justify-center transition ${
+                      className={`absolute top-[5%] right-[5%] h-[16%] aspect-square min-h-5 max-h-7 rounded-full flex items-center justify-center transition ${
                         active ? "bg-primary text-primary-foreground" : "bg-card border border-border"
                       }`}
                     >
-                      {active && <Check className="h-4 w-4" strokeWidth={3} />}
+                      {active && <Check className="h-1/2 w-1/2" strokeWidth={3} />}
                     </span>
-                    <span className="mb-1">{t.icon}</span>
+                    <span className="contents">{t.icon}</span>
                     {t.label}
                   </button>
                 );
