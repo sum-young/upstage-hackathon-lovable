@@ -28,10 +28,20 @@ export async function callN8n(payload: N8nPayload) {
     console.log(payload.file);
   }
 
-  const response = await fetch(url, {
-    method: "POST",
-    body: formData,
-  });
+  // n8n 워크플로우 응답이 오래 걸릴 수 있으므로 최대 5분까지 기다린다.
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), 5 * 60 * 1000);
+
+  let response: Response;
+  try {
+    response = await fetch(url, {
+      method: "POST",
+      body: formData,
+      signal: controller.signal,
+    });
+  } finally {
+    clearTimeout(timeoutId);
+  }
 
   if (!response.ok) {
     const text = await response.text();
