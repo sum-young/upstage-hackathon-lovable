@@ -1,9 +1,11 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 import { ArrowLeft, Check, Clipboard, Loader2, Upload, X } from "lucide-react";
-import brandLogo from "@/assets/brand-logo.png";
 import oliveYoungLogo from "@/assets/oliveyoung-logo.png";
 import amazonLogo from "@/assets/amazon-logo.png";
+import ageTeens from "@/assets/age-teens.png";
+import age2030s from "@/assets/age-2030s.png";
+import age40plus from "@/assets/age-40plus.png";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 import { toast } from "sonner";
@@ -20,35 +22,10 @@ export const Route = createFileRoute("/")({
 });
 
 const PRODUCT_CATEGORIES = ["토너", "앰플", "세럼", "로션", "수분크림", "안티에이징 크림", "립밤", "선스크린"];
-const AGES: { label: string; icon: React.ReactNode }[] = [
-  {
-    label: "10대",
-    icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="w-8 h-8">
-        <circle cx="12" cy="8" r="3.5" />
-        <path d="M8 20c0-2.2 1.8-4 4-4s4 1.8 4 4" />
-      </svg>
-    ),
-  },
-  {
-    label: "20/30대",
-    icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="w-8 h-8">
-        <circle cx="12" cy="7.5" r="3" />
-        <path d="M7 21c0-2.8 2.2-5 5-5s5 2.2 5 5" />
-      </svg>
-    ),
-  },
-  {
-    label: "40대 이상",
-    icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="w-8 h-8">
-        <circle cx="12" cy="7" r="2.8" />
-        <path d="M6 21c0-3.3 2.7-6 6-6s6 2.7 6 6" />
-        <path d="M10 11h4" strokeDasharray="1.5 1.5" />
-      </svg>
-    ),
-  },
+const AGES: { label: string; image: string }[] = [
+  { label: "10대", image: ageTeens },
+  { label: "20/30대", image: age2030s },
+  { label: "40대 이상", image: age40plus },
 ];
 
 const SKIN_TYPES: { label: string; icon: React.ReactNode }[] = [
@@ -447,7 +424,6 @@ function Index() {
       <div className="mx-auto max-w-5xl rounded-3xl border border-border bg-card p-6 md:p-10 shadow-sm">
         <header className="flex items-center justify-between pb-8 border-b border-border">
           <div className="flex items-center gap-3">
-            <img src={brandLogo} alt="클린뷰티 카피메이커" className="h-12 w-12 rounded-full object-cover" />
             <h1 className="text-xl font-semibold">클린뷰티 카피메이커</h1>
           </div>
           <div className="flex items-center gap-3">
@@ -486,7 +462,7 @@ function Index() {
                     role="radio"
                     aria-checked={active}
                     onClick={() => setAgeGroup(a.label)}
-                    className={`relative aspect-square rounded-xl border flex flex-col items-center justify-center p-3 text-lg font-semibold transition ${
+                    className={`relative aspect-square rounded-xl border flex flex-col items-center justify-center gap-2 p-3 text-lg font-semibold transition ${
                       active
                         ? "border-primary bg-primary/15 text-foreground"
                         : "border-border bg-muted hover:bg-secondary"
@@ -499,7 +475,8 @@ function Index() {
                     >
                       {active && <Check className="h-4 w-4" strokeWidth={3} />}
                     </span>
-                    {a.label}
+                    <img src={a.image} alt={a.label} className="h-12 w-12 rounded-lg object-cover" />
+                    <span>{a.label}</span>
                   </button>
                 );
               })}
