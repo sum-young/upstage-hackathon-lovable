@@ -193,6 +193,17 @@ function Index() {
       const designFromServer =
         pick("design", "design_guide", "designGuide", "layout", "guide", "디자인", "디자인가이드");
 
+      const rawWarnings = node?.warnings ?? node?.warning;
+      let warningsText: string | undefined;
+      if (Array.isArray(rawWarnings)) {
+        warningsText = rawWarnings.join("\n");
+      } else if (typeof rawWarnings === "string" && rawWarnings.trim()) {
+        warningsText = rawWarnings;
+      }
+      if (warningsText) {
+        console.log("n8n warnings:", warningsText);
+      }
+
       // 매칭되는 키가 전혀 없으면 전체 JSON을 보기 좋게 출력
       const fallbackDump =
         !copyFromServer && !designFromServer && node
@@ -204,6 +215,7 @@ function Index() {
       setResult({
         copy: copyFromServer ?? fallbackDump ?? fallback.copy,
         design: designFromServer ?? (fallbackDump ? "" : fallback.design),
+        warnings: warningsText,
       });
     } catch (err: any) {
       console.error("n8n 요청 실패, 하드코딩 결과로 대체:", err);
