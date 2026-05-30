@@ -94,7 +94,7 @@ function Index() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [loadingElapsed, setLoadingElapsed] = useState(0);
   const [stage, setStage] = useState<"input" | "result">("input");
-  const [result, setResult] = useState<{ copy: string; design: string } | null>(null);
+  const [result, setResult] = useState<{ copy: string; design: string; warnings?: string } | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
