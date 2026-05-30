@@ -173,7 +173,8 @@ function Index() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [loadingElapsed, setLoadingElapsed] = useState(0);
   const [stage, setStage] = useState<"input" | "result">("input");
-  const [result, setResult] = useState<{ copy: string; design: string; warnings?: string } | null>(null);
+  type WarningItem = { message: string; severity: "high" | "medium" | "low" | string };
+  const [result, setResult] = useState<{ copy: string; design: string; warnings?: WarningItem[] } | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -286,14 +287,27 @@ function Index() {
       );
 
       const rawWarnings = node?.warnings ?? node?.warning;
-      let warningsText: string | undefined;
+      let warningsList: WarningItem[] | undefined;
       if (Array.isArray(rawWarnings)) {
-        warningsText = rawWarnings.join("\n");
+        warningsList = rawWarnings
+          .map((w: any) => {
+            if (w && typeof w === "object") {
+              const message = typeof w.message === "string" ? w.message : "";
+              const severity = typeof w.severity === "string" ? w.severity : "low";
+              return message ? { message, severity } : null;
+            }
+            if (typeof w === "string" && w.trim()) {
+              return { message: w, severity: "low" };
+            }
+            return null;
+          })
+          .filter(Boolean) as WarningItem[];
+        if (warningsList.length === 0) warningsList = undefined;
       } else if (typeof rawWarnings === "string" && rawWarnings.trim()) {
-        warningsText = rawWarnings;
+        warningsList = [{ message: rawWarnings, severity: "low" }];
       }
-      if (warningsText) {
-        console.log("n8n warnings:", warningsText);
+      if (warningsList) {
+        console.log("n8n warnings:", warningsList);
       }
 
       // 매칭되는 키가 전혀 없으면 전체 JSON을 보기 좋게 출력
@@ -307,7 +321,7 @@ function Index() {
       setResult({
         copy: copyFromServer ?? fallbackDump ?? fallback.copy,
         design: designFromServer ?? (fallbackDump ? "" : fallback.design),
-        warnings: warningsText,
+        warnings: warningsList,
       });
     } catch (err: any) {
       console.error("n8n 요청 실패, 하드코딩 결과로 대체:", err);
@@ -361,13 +375,36 @@ function Index() {
             />
           </div>
 
-          {result.warnings && (
-            <ResultPanel
-              title="주의사항 (Warnings)"
-              value={result.warnings}
-              onCopy={() => copyText(result.warnings!, "주의사항")}
-              minHeight="min-h-[120px]"
-            />
+          {result.warnings && result.warnings.length > 0 && (
+            <section className="mt-10 rounded-2xl border-2 border-primary/30 bg-secondary/30 p-5">
+              <h2 className="text-sm font-semibold mb-4">주의사항 (Warnings)</h2>
+              <div className="flex flex-col gap-3">
+                {result.warnings.map((w, i) => {
+                  const sev = (w.severity || "").toLowerCase();
+                  const styles =
+                    sev === "high"
+                      ? { box: "bg-red-50 border-red-300", text: "text-red-700", label: "위험성 높음" }
+                      : sev === "medium"
+                        ? { box: "bg-yellow-50 border-yellow-300", text: "text-yellow-700", label: "위험성 존재" }
+                        : { box: "bg-card border-border", text: "text-muted-foreground", label: "참고사항" };
+                  return (
+                    <div
+                      key={i}
+                      className={`flex items-stretch rounded-xl border ${styles.box} overflow-hidden`}
+                    >
+                      <div
+                        className={`w-[25%] min-w-[100px] flex items-center justify-center p-3 text-sm font-semibold ${styles.text} border-r ${styles.box}`}
+                      >
+                        {styles.label}
+                      </div>
+                      <div className="flex-1 p-3 text-sm leading-relaxed text-foreground bg-card">
+                        {w.message}
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </section>
           )}
 
           <div className="flex justify-end mt-8">
