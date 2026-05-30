@@ -218,9 +218,7 @@ function Index() {
   };
 
   const handleSubmit = async () => {
-    const resolvedCategory = productCategory === "기타" ? productCategoryOther.trim() : productCategory;
-
-    if (!resolvedCategory) {
+    if (!productCategory) {
       toast.error("제품 유형을 선택해주세요.");
       return;
     }
