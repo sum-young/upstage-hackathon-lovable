@@ -508,7 +508,7 @@ function Index() {
           {/* 3. 피부 타입 */}
           <section>
             <h2 className="text-sm font-semibold mb-3">3. 피부 타입</h2>
-            <div role="radiogroup" className="grid grid-cols-3 gap-3">
+            <div role="radiogroup" className="grid grid-cols-4 gap-3">
               {SKIN_TYPES.map((s) => {
                 const active = skinType === s.label;
                 return (
