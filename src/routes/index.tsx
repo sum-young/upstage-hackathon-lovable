@@ -196,9 +196,8 @@ function Index() {
         : "거의 다 왔어요! 매력적인 카피를 작성 중입니다... (최대 40초 정도 소요될 수 있어요)";
 
   useEffect(() => {
-    const resolvedCategory = productCategory === "기타" ? productCategoryOther.trim() : productCategory;
     const state = {
-      product_category: resolvedCategory || undefined,
+      product_category: productCategory || undefined,
       skin_type: skinType,
       age_group: ageGroup,
       design_type: designType,
@@ -206,7 +205,7 @@ function Index() {
       file: file ? { name: file.name, size: file.size, type: file.type } : null,
     };
     console.log("현재 상태:", state);
-  }, [productCategory, productCategoryOther, skinType, ageGroup, designType, highlight, file]);
+  }, [productCategory, skinType, ageGroup, designType, highlight, file]);
 
   const handleFiles = (files: FileList | null) => {
     if (!files || files.length === 0) return;
