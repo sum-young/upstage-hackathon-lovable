@@ -31,9 +31,6 @@ export async function callN8n(payload: N8nPayload) {
   const response = await fetch(url, {
     method: "POST",
     body: formData,
-    headers: {
-      "ngrok-skip-browser-warning": "69420", // ⭐ 이 줄이 반드시 있어야 ngrok 경고창을 뚫고 지나갑니다!
-    },
   });
 
   if (!response.ok) {
