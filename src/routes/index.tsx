@@ -16,7 +16,7 @@ export const Route = createFileRoute("/")({
   component: Index,
 });
 
-const PRODUCT_CATEGORIES = ["세럼", "토너", "크림", "기타"];
+const PRODUCT_CATEGORIES = ["토너", "앰플", "세럼", "로션", "수분크림", "안티에이징 크림", "립밤", "선스크린"];
 const AGES: { label: string; icon: React.ReactNode }[] = [
   {
     label: "10대",
