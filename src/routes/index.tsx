@@ -171,11 +171,40 @@ function Index() {
     try {
       const data = await callN8n(payload);
       console.log("n8n 응답:", data);
-      const finalResult = {
-        copy: typeof data?.copy === "string" && data.copy ? data.copy : fallback.copy,
-        design: typeof data?.design === "string" && data.design ? data.design : fallback.design,
+
+      // n8n이 배열로 감싸서 보내는 경우 첫 요소를 사용
+      const raw: any = Array.isArray(data) ? data[0] : data;
+      // 응답이 { output: {...} } 또는 { data: {...} } 형태일 수도 있어 평탄화
+      const node: any =
+        raw && typeof raw === "object" && (raw.output || raw.data || raw.result)
+          ? raw.output || raw.data || raw.result
+          : raw;
+
+      const pick = (...keys: string[]) => {
+        for (const k of keys) {
+          const v = node?.[k];
+          if (typeof v === "string" && v.trim()) return v;
+        }
+        return undefined;
       };
-      setResult(finalResult);
+
+      const copyFromServer =
+        pick("copy", "detail_copy", "detailCopy", "page_copy", "text", "content", "카피", "상세페이지카피");
+      const designFromServer =
+        pick("design", "design_guide", "designGuide", "layout", "guide", "디자인", "디자인가이드");
+
+      // 매칭되는 키가 전혀 없으면 전체 JSON을 보기 좋게 출력
+      const fallbackDump =
+        !copyFromServer && !designFromServer && node
+          ? typeof node === "string"
+            ? node
+            : JSON.stringify(node, null, 2)
+          : undefined;
+
+      setResult({
+        copy: copyFromServer ?? fallbackDump ?? fallback.copy,
+        design: designFromServer ?? (fallbackDump ? "" : fallback.design),
+      });
     } catch (err: any) {
       console.error("n8n 요청 실패, 하드코딩 결과로 대체:", err);
       console.log("하드코딩 결과:", fallback);
