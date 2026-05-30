@@ -271,6 +271,15 @@ function Index() {
             />
           </div>
 
+          {result.warnings && (
+            <ResultPanel
+              title="주의사항 (Warnings)"
+              value={result.warnings}
+              onCopy={() => copyText(result.warnings!, "주의사항")}
+              minHeight="min-h-[120px]"
+            />
+          )}
+
           <div className="flex justify-end mt-8">
             <button
               onClick={() => setStage("input")}
