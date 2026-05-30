@@ -465,7 +465,7 @@ function Index() {
           {/* 2. 타깃 연령층 */}
           <section>
             <h2 className="text-sm font-semibold mb-3">2. 타깃 연령층 설정</h2>
-            <div role="radiogroup" className="grid grid-cols-4 gap-3">
+            <div role="radiogroup" className="grid grid-cols-3 gap-3">
               {AGES.map((a) => {
                 const active = ageGroup === a.label;
                 return (
