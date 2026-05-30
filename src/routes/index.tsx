@@ -425,8 +425,8 @@ function Index() {
       <div className="mx-auto max-w-5xl rounded-3xl border border-border bg-card p-6 md:p-10 shadow-sm">
         <header className="flex items-center justify-between pb-8 border-b border-border">
           <div className="flex items-center gap-3">
-            <img src={brandLogo} alt="COPY BLOOM AI" className="h-10 w-10 rounded-full object-cover" />
-            <h1 className="text-xl font-semibold">COPY BLOOM AI</h1>
+            <img src={brandLogo} alt="COPY BLOOM" className="h-10 w-10 rounded-full object-cover" />
+            <h1 className="text-xl font-semibold">COPY BLOOM</h1>
           </div>
           <div className="flex items-center gap-3">
             <span className="text-sm text-muted-foreground">사용자 이름</span>
