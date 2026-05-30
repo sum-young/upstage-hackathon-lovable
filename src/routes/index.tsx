@@ -55,10 +55,12 @@ function ResultPanel({
   title,
   value,
   onCopy,
+  minHeight = "min-h-[360px]",
 }: {
   title: string;
   value: string;
   onCopy: () => void;
+  minHeight?: string;
 }) {
   return (
     <section className="rounded-2xl border-2 border-primary/30 bg-secondary/30 p-5">
@@ -76,7 +78,7 @@ function ResultPanel({
       <textarea
         value={value}
         readOnly
-        className="w-full min-h-[360px] resize-y rounded-xl border border-border bg-card p-4 text-sm leading-relaxed text-foreground focus:outline-none focus:border-primary"
+        className={`w-full ${minHeight} resize-y rounded-xl border border-border bg-card p-4 text-sm leading-relaxed text-foreground focus:outline-none focus:border-primary`}
       />
     </section>
   );
@@ -94,7 +96,7 @@ function Index() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [loadingElapsed, setLoadingElapsed] = useState(0);
   const [stage, setStage] = useState<"input" | "result">("input");
-  const [result, setResult] = useState<{ copy: string; design: string } | null>(null);
+  const [result, setResult] = useState<{ copy: string; design: string; warnings?: string } | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -193,6 +195,17 @@ function Index() {
       const designFromServer =
         pick("design", "design_guide", "designGuide", "layout", "guide", "디자인", "디자인가이드");
 
+      const rawWarnings = node?.warnings ?? node?.warning;
+      let warningsText: string | undefined;
+      if (Array.isArray(rawWarnings)) {
+        warningsText = rawWarnings.join("\n");
+      } else if (typeof rawWarnings === "string" && rawWarnings.trim()) {
+        warningsText = rawWarnings;
+      }
+      if (warningsText) {
+        console.log("n8n warnings:", warningsText);
+      }
+
       // 매칭되는 키가 전혀 없으면 전체 JSON을 보기 좋게 출력
       const fallbackDump =
         !copyFromServer && !designFromServer && node
@@ -204,6 +217,7 @@ function Index() {
       setResult({
         copy: copyFromServer ?? fallbackDump ?? fallback.copy,
         design: designFromServer ?? (fallbackDump ? "" : fallback.design),
+        warnings: warningsText,
       });
     } catch (err: any) {
       console.error("n8n 요청 실패, 하드코딩 결과로 대체:", err);
@@ -256,6 +270,15 @@ function Index() {
               onCopy={() => copyText(result.design, "디자인 가이드")}
             />
           </div>
+
+          {result.warnings && (
+            <ResultPanel
+              title="주의사항 (Warnings)"
+              value={result.warnings}
+              onCopy={() => copyText(result.warnings!, "주의사항")}
+              minHeight="min-h-[120px]"
+            />
+          )}
 
           <div className="flex justify-end mt-8">
             <button
