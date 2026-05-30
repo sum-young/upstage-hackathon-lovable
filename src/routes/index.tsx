@@ -469,14 +469,6 @@ function Index() {
                 ))}
               </SelectContent>
             </Select>
-            {productCategory === "기타" && (
-              <Input
-                value={productCategoryOther}
-                onChange={(e) => setProductCategoryOther(e.target.value)}
-                placeholder="제품 유형을 직접 입력해주세요"
-                className="mt-3 rounded-xl border-border bg-muted px-4 py-3 text-sm h-auto focus-visible:border-primary focus-visible:bg-card"
-              />
-            )}
           </section>
 
           {/* 2. 타깃 연령층 */}
