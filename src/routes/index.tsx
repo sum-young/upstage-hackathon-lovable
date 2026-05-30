@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
-import { ArrowLeft, Check, Clipboard, Leaf, Loader2, Upload, X } from "lucide-react";
+import { ArrowLeft, Check, Clipboard, Loader2, Upload, X } from "lucide-react";
+import brandLogo from "@/assets/brand-logo.png";
 import oliveYoungLogo from "@/assets/oliveyoung-logo.png";
 import amazonLogo from "@/assets/amazon-logo.png";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -446,7 +447,7 @@ function Index() {
       <div className="mx-auto max-w-5xl rounded-3xl border border-border bg-card p-6 md:p-10 shadow-sm">
         <header className="flex items-center justify-between pb-8 border-b border-border">
           <div className="flex items-center gap-3">
-            <Leaf className="h-9 w-9 text-primary" />
+            <img src={brandLogo} alt="클린뷰티 카피메이커" className="h-12 w-12 rounded-full object-cover" />
             <h1 className="text-xl font-semibold">클린뷰티 카피메이커</h1>
           </div>
           <div className="flex items-center gap-3">
