@@ -33,7 +33,7 @@ const SKIN_TYPES: { label: string; icon: React.ReactNode }[] = [
   {
     label: "건성",
     icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" className="w-8 h-8">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" className="icon-art w-8 h-8">
         <circle cx="12" cy="12" r="9" />
         <path d="M8 10c1.5 2 2.5 2 4 0" />
         <path d="M10 14c1 1.5 3 1.5 4 0" />
@@ -44,7 +44,7 @@ const SKIN_TYPES: { label: string; icon: React.ReactNode }[] = [
   {
     label: "지성",
     icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" className="w-8 h-8">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" className="icon-art w-8 h-8">
         <circle cx="12" cy="12" r="9" />
         <path d="M9 10c1.2 1.5 2.8 1.5 4 0" />
         <path d="M10 14c1 .8 3 .8 4 0" />
@@ -56,7 +56,7 @@ const SKIN_TYPES: { label: string; icon: React.ReactNode }[] = [
   {
     label: "민감성",
     icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" className="w-8 h-8">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" className="icon-art w-8 h-8">
         <circle cx="12" cy="12" r="9" />
         <path d="M8 10c1.5 2 2.5 2 4 0" />
         <path d="M10 14c1 1.5 3 1.5 4 0" />
@@ -69,7 +69,7 @@ const SKIN_TYPES: { label: string; icon: React.ReactNode }[] = [
   {
     label: "복합성",
     icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" className="w-8 h-8">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" className="icon-art w-8 h-8">
         <circle cx="12" cy="12" r="9" />
         <path d="M12 3v18" strokeWidth="1.2" opacity=".6" />
         {/* 건성: 좌측 */}
@@ -88,13 +88,13 @@ const TEMPLATES: { label: string; icon: React.ReactNode }[] = [
   {
     label: "올리브영",
     icon: (
-      <img src={oliveYoungLogo} alt="올리브영" className="h-8 w-auto object-contain" />
+      <img src={oliveYoungLogo} alt="올리브영" className="icon-art h-8 w-auto object-contain" />
     ),
   },
   {
     label: "아마존",
     icon: (
-      <img src={amazonLogo} alt="아마존" className="h-10 w-auto object-contain" />
+      <img src={amazonLogo} alt="아마존" className="icon-art h-10 w-auto object-contain" />
     ),
   },
 ];
